@@ -1,7 +1,7 @@
 # Online Equipment Borrowing and Return Monitoring System
 
 **Course:** Systems Analysis and Design
-**Student:** Luie
+**Student:** Luie Jay A. Mondejar
 **Front End:** HTML, CSS, JavaScript
 **Backend:** Supabase (PostgreSQL + Authentication)
 **Hosting:** GitHub Pages
@@ -138,14 +138,12 @@ Fill in **PASS/FAIL** in the Result column after testing your deployed system.
 SAD-EquipmentBorrowing-Luie/
 ├── index.html
 ├── login.html
-├── css/style.css
-├── js/
-│   ├── supabase.js
-│   ├── auth.js
-│   ├── equipment.js
-│   └── transactions.js
-├── documentation/
-│   └── schema.sql
+├── style.css
+├── supabase.js
+├── auth.js
+├── equipment.js
+└── transactions.js
+└── schema.sql
 └── README.md
 ```
 
@@ -167,6 +165,4 @@ Not implemented in this base version. To add it: on clicking an equipment row, q
 `borrow_transactions` filtered by that `equipment_id` and render the list of past borrowers,
 their borrow/return dates, and current status, pulled live from Supabase.
 
-Account Log-in
-    email: luiejay07@gmail.com
-    password: luie123
+Account Log-in : email: admin@gmail.com password: 123456
