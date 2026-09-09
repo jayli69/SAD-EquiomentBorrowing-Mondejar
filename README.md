@@ -166,3 +166,7 @@ SAD-EquipmentBorrowing-Luie/
 Not implemented in this base version. To add it: on clicking an equipment row, query
 `borrow_transactions` filtered by that `equipment_id` and render the list of past borrowers,
 their borrow/return dates, and current status, pulled live from Supabase.
+
+Account Log-in
+    email: luiejay07@gmail
+    password: luie123
