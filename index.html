@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Equipment Borrowing Monitoring System</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <h1>Equipment Borrowing Monitoring System</h1>
+    <button id="logoutBtn" class="btn-secondary">Logout</button>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+    <button class="tab-btn" data-tab="equipment">Equipment</button>
+    <button class="tab-btn" data-tab="transactions">Transactions</button>
+  </nav>
+
+  <main>
+
+    <!-- ================= DASHBOARD ================= -->
+    <section id="dashboard" class="tab-panel active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Total Equipment</span>
+          <span class="stat-value" id="statTotal">0</span>
+        </div>
+        <div class="stat-card stat-green">
+          <span class="stat-label">Available</span>
+          <span class="stat-value" id="statAvailable">0</span>
+        </div>
+        <div class="stat-card stat-orange">
+          <span class="stat-label">Borrowed</span>
+          <span class="stat-value" id="statBorrowed">0</span>
+        </div>
+        <div class="stat-card stat-blue">
+          <span class="stat-label">Returned</span>
+          <span class="stat-value" id="statReturned">0</span>
+        </div>
+        <div class="stat-card stat-red">
+          <span class="stat-label">Overdue</span>
+          <span class="stat-value" id="statOverdue">0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EQUIPMENT ================= -->
+    <section id="equipment" class="tab-panel">
+      <div class="panel-header">
+        <div class="filters">
+          <input type="text" id="equipmentSearch" placeholder="Search by name or asset code..." oninput="searchAndFilterEquipment()" />
+          <select id="equipmentAvailabilityFilter" onchange="searchAndFilterEquipment()">
+            <option value="All">All</option>
+            <option value="Available">Available</option>
+            <option value="Borrowed">Borrowed</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="openAddEquipment()">+ Add Equipment</button>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Asset Code</th>
+            <th>Equipment Name</th>
+            <th>Category</th>
+            <th>Condition</th>
+            <th>Availability</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="equipmentTableBody"></tbody>
+      </table>
+    </section>
+
+    <!-- ================= TRANSACTIONS ================= -->
+    <section id="transactions" class="tab-panel">
+      <div class="panel-header">
+        <div class="filters">
+          <input type="text" id="transactionSearch" placeholder="Search by borrower or equipment..." oninput="searchAndFilterTransactions()" />
+          <select id="transactionStatusFilter" onchange="searchAndFilterTransactions()">
+            <option value="All">All</option>
+            <option value="Borrowed">Borrowed</option>
+            <option value="Returned">Returned</option>
+            <option value="Overdue">Overdue</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="openAddTransaction()">+ Record Borrowing</button>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Equipment</th>
+            <th>Borrower</th>
+            <th>Type</th>
+            <th>Department</th>
+            <th>Date Borrowed</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="transactionsTableBody"></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- ================= EQUIPMENT MODAL ================= -->
+  <div id="equipmentModal" class="modal-overlay">
+    <div class="modal">
+      <h2 id="equipmentModalTitle">Add Equipment</h2>
+      <form id="equipmentForm">
+        <label for="eqName">Equipment Name</label>
+        <input type="text" id="eqName" required />
+
+        <label for="eqCategory">Category</label>
+        <input type="text" id="eqCategory" required />
+
+        <label for="eqCode">Asset Code</label>
+        <input type="text" id="eqCode" required />
+
+        <label for="eqCondition">Condition</label>
+        <select id="eqCondition">
+          <option value="Good">Good</option>
+          <option value="Fair">Fair</option>
+          <option value="For Repair">For Repair</option>
+        </select>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeEquipmentModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Save Equipment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= TRANSACTION MODAL ================= -->
+  <div id="transactionModal" class="modal-overlay">
+    <div class="modal">
+      <h2>New Borrowing Transaction</h2>
+      <form id="transactionForm">
+        <label for="txBorrowerName">Borrower Name</label>
+        <input type="text" id="txBorrowerName" required />
+
+        <label for="txBorrowerType">Borrower Type</label>
+        <select id="txBorrowerType">
+          <option value="Student">Student</option>
+          <option value="Faculty">Faculty</option>
+          <option value="Staff">Staff</option>
+        </select>
+
+        <label for="txDepartment">Department</label>
+        <select id="txDepartment" required>
+          <option value="">-- Select Department --</option>
+          <option value="College of Information Technology">College of Information Technology</option>
+          <option value="College of Education">College of Education</option>
+          <option value="College of Agriculture">College of Agriculture</option>
+          <option value="College of Engineering">College of Engineering</option>
+          <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+          <option value="Registrar's Office">Registrar's Office</option>
+          <option value="Library">Library</option>
+          <option value="Administration">Administration</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="txEquipment">Equipment</label>
+        <select id="txEquipment" required></select>
+
+        <label for="txDateBorrowed">Date Borrowed</label>
+        <input type="date" id="txDateBorrowed" required />
+
+        <label for="txDueDate">Due Date</label>
+        <input type="date" id="txDueDate" required />
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeTransactionModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Save Borrowing Transaction</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
+  <script src="equipment.js"></script>
+  <script src="transactions.js"></script>
+  <script>
+    // Tab switching
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.add("active");
+      });
+    });
+
+    // Init: require session, then load data
+    (async () => {
+      const session = await requireSession();
+      if (!session) return;
+      currentUserId = session.user.id;
+      await loadEquipment();
+      await loadTransactions();
+    })();
+  </script>
+</body>
+</html>
