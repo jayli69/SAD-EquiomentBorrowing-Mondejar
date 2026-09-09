@@ -168,5 +168,5 @@ Not implemented in this base version. To add it: on clicking an equipment row, q
 their borrow/return dates, and current status, pulled live from Supabase.
 
 Account Log-in
-    email: luiejay07@gmail
+    email: luiejay07@gmail.com
     password: luie123
