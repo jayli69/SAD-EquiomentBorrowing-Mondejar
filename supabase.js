@@ -5,6 +5,6 @@
 // ============================================================
 
 const SUPABASE_URL = "https://sexenvrscorutijlrlkj.supabase.co";
-const SUPABASE_ANON_KEY = "https://sexenvrscorutijlrlkj.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_GKoNrVOdXGhmsvaqZwEebA_G_ARz9_Y";
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
